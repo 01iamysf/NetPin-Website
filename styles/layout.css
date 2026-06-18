@@ -71,6 +71,7 @@ section {
   .md\:flex-col { flex-direction: column; }
   .md\:col-span-1 { grid-column: span 1 / span 1; }
   .md\:w-auto { width: auto; }
+  .md\:hidden { display: none !important; }
   
   .hero-buttons {
     flex-direction: row;
