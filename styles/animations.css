@@ -105,10 +105,10 @@
 }
 
 /* ============================================================
-   INTRO / SPLASH SCREEN
+   INTRO / SPLASH SCREEN  (GPU-optimised, zero-repaint)
    ============================================================ */
 
-/* Overlay itself — always dark regardless of theme */
+/* Overlay \u2014 always dark regardless of theme */
 .intro-overlay {
   position: fixed;
   inset: 0;
@@ -118,36 +118,48 @@
   justify-content: center;
   background: #0a0e1a !important;
   overflow: hidden;
-  /* Fade + scale out when dismissed */
-  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-              visibility 0.8s;
+  /* contain tells the browser the overlay is an isolated painting scope */
+  contain: layout style;
+  /* Exit: opacity-only \u2014 avoids forcing a composite of every child */
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+              visibility 0.7s;
+  will-change: opacity;
 }
 
 .intro-overlay.is-hidden {
   opacity: 0;
-  transform: scale(1.04);
   pointer-events: none;
   visibility: hidden;
 }
 
-/* Grid background */
+/* ── Grid background ───────────────────────────────────────────
+   Animate a pseudo-element overlay instead of the element itself
+   so the background-image never triggers a repaint on every tick.
+────────────────────────────────────────────────────────────── */
 .intro-bg-grid {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(59, 130, 246, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(59, 130, 246, 0.07) 1px, transparent 1px);
+    linear-gradient(rgba(59, 130, 246, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.08) 1px, transparent 1px);
   background-size: 48px 48px;
+  /* The grid itself stays static \u2014 no repaint */
+}
+.intro-bg-grid::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: inherit;
   animation: intro-grid-pulse 3s ease-in-out infinite;
+  will-change: opacity;
 }
 
 @keyframes intro-grid-pulse {
   0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
+  50%       { opacity: 1;   }
 }
 
-/* Glow burst in the center */
+/* ── Glow burst ────────────────────────────────────────────── */
 .intro-glow-burst {
   position: absolute;
   width: 600px;
@@ -155,20 +167,22 @@
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(59, 130, 246, 0.25) 0%,
-    rgba(99, 102, 241, 0.15) 40%,
+    rgba(59, 130, 246, 0.22) 0%,
+    rgba(99, 102, 241, 0.13) 40%,
     transparent 70%
   );
-  animation: intro-glow-expand 2.5s ease-out forwards;
+  /* transform + opacity are compositor-only \u2014 zero repaint */
+  animation: intro-glow-expand 2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   pointer-events: none;
+  will-change: transform, opacity;
 }
 
 @keyframes intro-glow-expand {
-  from { transform: scale(0.3); opacity: 0; }
+  from { transform: scale(0.4); opacity: 0; }
   to   { transform: scale(1);   opacity: 1; }
 }
 
-/* Content wrapper */
+/* ── Content wrapper ───────────────────────────────────────── */
 .intro-content {
   display: flex;
   flex-direction: column;
@@ -176,9 +190,10 @@
   gap: 2rem;
   position: relative;
   z-index: 1;
+  will-change: transform, opacity;
 }
 
-/* --- Logo Wrapper + Rings --- */
+/* ── Logo wrapper + rings ──────────────────────────────────── */
 .intro-logo-wrapper {
   position: relative;
   width: 120px;
@@ -186,61 +201,67 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: intro-logo-pop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
+  animation: intro-logo-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+  will-change: transform, opacity;
 }
 
 @keyframes intro-logo-pop {
-  from { opacity: 0; transform: scale(0.4); }
-  to   { opacity: 1; transform: scale(1); }
+  from { opacity: 0; transform: scale(0.5); }
+  to   { opacity: 1; transform: scale(1);   }
 }
 
-/* Spinning orbital rings */
+/* Each ring gets its own GPU layer via will-change: transform */
 .intro-logo-ring {
   position: absolute;
   border-radius: 50%;
   border: 1.5px solid transparent;
+  /* Pre-promote to compositor layer \u2014 spin is now zero-cost */
+  will-change: transform;
+  /* Force layer creation before animation starts */
+  transform: rotate(0deg);
 }
 
 .intro-logo-ring-1 {
   width: 100%;
   height: 100%;
-  border-top-color: rgba(59, 130, 246, 0.7);
+  border-top-color: rgba(59, 130, 246, 0.75);
   border-right-color: rgba(59, 130, 246, 0.2);
-  animation: intro-spin 2s linear infinite;
+  animation: intro-spin 2.4s linear infinite;
 }
 
 .intro-logo-ring-2 {
-  width: 130%;
-  height: 130%;
-  border-bottom-color: rgba(99, 102, 241, 0.6);
+  width: 132%;
+  height: 132%;
+  border-bottom-color: rgba(99, 102, 241, 0.65);
   border-left-color: rgba(99, 102, 241, 0.15);
-  animation: intro-spin 3s linear infinite reverse;
+  animation: intro-spin 3.6s linear infinite reverse;
 }
 
 .intro-logo-ring-3 {
-  width: 160%;
-  height: 160%;
-  border-top-color: rgba(168, 85, 247, 0.35);
+  width: 164%;
+  height: 164%;
+  border-top-color: rgba(168, 85, 247, 0.38);
   border-right-color: rgba(168, 85, 247, 0.1);
-  animation: intro-spin 4.5s linear infinite;
+  animation: intro-spin 5.2s linear infinite;
 }
 
 @keyframes intro-spin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+  to { transform: rotate(360deg); }
 }
 
-/* Logo icon circle */
+/* ── Logo icon ─────────────────────────────────────────────── */
 .intro-logo-icon {
   width: 72px;
   height: 72px;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.98));
   border: 1px solid rgba(99, 102, 241, 0.4);
+  /* box-shadow is GPU-friendly; drop-shadow filter is NOT */
   box-shadow:
-    0 0 0 1px rgba(59, 130, 246, 0.15),
-    0 0 30px rgba(59, 130, 246, 0.3),
-    inset 0 1px 0 rgba(255,255,255,0.05);
+    0 0 0 1px rgba(59, 130, 246, 0.12),
+    0 0 24px rgba(59, 130, 246, 0.35),
+    0 0 48px rgba(99, 102, 241, 0.15),
+    inset 0 1px 0 rgba(255,255,255,0.06);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -250,18 +271,19 @@
 .intro-logo-icon img {
   width: 38px;
   height: 38px;
-  filter: drop-shadow(0 0 8px rgba(99, 130, 246, 0.6));
+  /* No filter: drop-shadow here \u2014 it causes per-frame GPU texture upload */
 }
 
-/* --- Title block --- */
+/* ── Title block ───────────────────────────────────────────── */
 .intro-title-block {
   text-align: center;
-  animation: intro-title-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.8s both;
+  animation: intro-title-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.75s both;
+  will-change: transform, opacity;
 }
 
 @keyframes intro-title-rise {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0);    }
 }
 
 .intro-title {
@@ -291,22 +313,27 @@
   text-transform: uppercase;
   color: rgba(148, 163, 184, 0.75);
   margin: 0;
-  animation: intro-tagline-fade 0.8s ease-out 1.2s both;
+  animation: intro-tagline-fade 0.7s ease-out 1.1s both;
+  will-change: opacity;
 }
 
 @keyframes intro-tagline-fade {
-  from { opacity: 0; letter-spacing: 0.25em; }
+  from { opacity: 0; letter-spacing: 0.22em; }
   to   { opacity: 1; letter-spacing: 0.08em; }
 }
 
-/* --- Progress / Loader bar --- */
+/* ── Loader bar ────────────────────────────────────────────────
+   Use scaleX instead of width: width change triggers layout
+   recalculation every single frame on the main thread.
+   scaleX is a pure compositor operation \u2014 60 fps guaranteed.
+────────────────────────────────────────────────────────────── */
 .intro-loader {
   width: 180px;
   height: 2px;
   background: rgba(255,255,255,0.07);
   border-radius: 999px;
   overflow: hidden;
-  animation: intro-loader-appear 0.4s ease 1.3s both;
+  animation: intro-loader-appear 0.4s ease 1.2s both;
 }
 
 @keyframes intro-loader-appear {
@@ -316,15 +343,19 @@
 
 .intro-loader-bar {
   height: 100%;
-  width: 0%;
+  width: 100%;                /* always full width now */
   border-radius: 999px;
   background: linear-gradient(90deg, #3b82f6, #818cf8, #c084fc);
-  animation: intro-loader-fill 1.4s cubic-bezier(0.4, 0, 0.2, 1) 1.4s forwards;
+  transform: scaleX(0);
+  transform-origin: left center;
+  /* scaleX = compositor-only, zero layout cost */
+  animation: intro-loader-fill 1.4s cubic-bezier(0.4, 0, 0.2, 1) 1.3s forwards;
+  will-change: transform;
 }
 
 @keyframes intro-loader-fill {
-  from { width: 0%; }
-  to   { width: 100%; }
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
 }
 
 /* Prevent scroll + prevent light-mode flash while intro is visible */
