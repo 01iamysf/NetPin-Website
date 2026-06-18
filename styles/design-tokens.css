@@ -36,6 +36,9 @@
   
   --shadow-color: rgba(0, 0, 0, 0.05);
   --shadow-primary: rgba(59, 130, 246, 0.15);
+  
+  --map-filter: none;
+  --map-opacity: 0.05;
 
   /* Typography */
   --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -82,4 +85,6 @@
   --border-color-light: rgba(30, 41, 59, 0.5);
   
   --shadow-color: rgba(0, 0, 0, 0.3);
+  --map-filter: invert(1);
+  --map-opacity: 0.1;
 }
