@@ -103,3 +103,233 @@
   opacity: 1;
   transform: scale(1);
 }
+
+/* ============================================================
+   INTRO / SPLASH SCREEN
+   ============================================================ */
+
+/* Overlay itself — always dark regardless of theme */
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a0e1a !important;
+  overflow: hidden;
+  /* Fade + scale out when dismissed */
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              visibility 0.8s;
+}
+
+.intro-overlay.is-hidden {
+  opacity: 0;
+  transform: scale(1.04);
+  pointer-events: none;
+  visibility: hidden;
+}
+
+/* Grid background */
+.intro-bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(59, 130, 246, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.07) 1px, transparent 1px);
+  background-size: 48px 48px;
+  animation: intro-grid-pulse 3s ease-in-out infinite;
+}
+
+@keyframes intro-grid-pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* Glow burst in the center */
+.intro-glow-burst {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(59, 130, 246, 0.25) 0%,
+    rgba(99, 102, 241, 0.15) 40%,
+    transparent 70%
+  );
+  animation: intro-glow-expand 2.5s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes intro-glow-expand {
+  from { transform: scale(0.3); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+/* Content wrapper */
+.intro-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* --- Logo Wrapper + Rings --- */
+.intro-logo-wrapper {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: intro-logo-pop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
+}
+
+@keyframes intro-logo-pop {
+  from { opacity: 0; transform: scale(0.4); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Spinning orbital rings */
+.intro-logo-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1.5px solid transparent;
+}
+
+.intro-logo-ring-1 {
+  width: 100%;
+  height: 100%;
+  border-top-color: rgba(59, 130, 246, 0.7);
+  border-right-color: rgba(59, 130, 246, 0.2);
+  animation: intro-spin 2s linear infinite;
+}
+
+.intro-logo-ring-2 {
+  width: 130%;
+  height: 130%;
+  border-bottom-color: rgba(99, 102, 241, 0.6);
+  border-left-color: rgba(99, 102, 241, 0.15);
+  animation: intro-spin 3s linear infinite reverse;
+}
+
+.intro-logo-ring-3 {
+  width: 160%;
+  height: 160%;
+  border-top-color: rgba(168, 85, 247, 0.35);
+  border-right-color: rgba(168, 85, 247, 0.1);
+  animation: intro-spin 4.5s linear infinite;
+}
+
+@keyframes intro-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Logo icon circle */
+.intro-logo-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
+  border: 1px solid rgba(99, 102, 241, 0.4);
+  box-shadow:
+    0 0 0 1px rgba(59, 130, 246, 0.15),
+    0 0 30px rgba(59, 130, 246, 0.3),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.intro-logo-icon img {
+  width: 38px;
+  height: 38px;
+  filter: drop-shadow(0 0 8px rgba(99, 130, 246, 0.6));
+}
+
+/* --- Title block --- */
+.intro-title-block {
+  text-align: center;
+  animation: intro-title-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.8s both;
+}
+
+@keyframes intro-title-rise {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.intro-title {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin: 0 0 0.5rem 0;
+  background: linear-gradient(
+    135deg,
+    #e2e8f0 0%,
+    #93c5fd 40%,
+    #818cf8 70%,
+    #c084fc 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.intro-tagline {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: clamp(0.85rem, 2vw, 1.05rem);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.75);
+  margin: 0;
+  animation: intro-tagline-fade 0.8s ease-out 1.2s both;
+}
+
+@keyframes intro-tagline-fade {
+  from { opacity: 0; letter-spacing: 0.25em; }
+  to   { opacity: 1; letter-spacing: 0.08em; }
+}
+
+/* --- Progress / Loader bar --- */
+.intro-loader {
+  width: 180px;
+  height: 2px;
+  background: rgba(255,255,255,0.07);
+  border-radius: 999px;
+  overflow: hidden;
+  animation: intro-loader-appear 0.4s ease 1.3s both;
+}
+
+@keyframes intro-loader-appear {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.intro-loader-bar {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #3b82f6, #818cf8, #c084fc);
+  animation: intro-loader-fill 1.4s cubic-bezier(0.4, 0, 0.2, 1) 1.4s forwards;
+}
+
+@keyframes intro-loader-fill {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+
+/* Prevent scroll + prevent light-mode flash while intro is visible */
+html:has(body.intro-active),
+body.intro-active {
+  overflow: hidden;
+  background-color: #0a0e1a !important;
+}

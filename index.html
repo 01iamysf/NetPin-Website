@@ -6,6 +6,12 @@
   <title>NetPin - Infrastructure Transparency at a Glance</title>
   <meta name="description" content="NetPin is a premium browser extension for analyzing web infrastructure, privacy, trackers, and hosting sustainability.">
   <link rel="icon" type="image/png" href="assets/logo.png">
+
+  <!-- Critical: lock background to intro dark color before any CSS loads (prevents flash in light mode) -->
+  <style>
+    html, body { background-color: #0a0e1a; }
+  </style>
+
   
   <!-- CSS -->
   <link rel="stylesheet" href="styles/design-tokens.css">
@@ -20,6 +26,37 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
+
+  <!-- Animated Intro / Splash Screen -->
+  <div id="intro-overlay" class="intro-overlay" aria-hidden="true">
+    <!-- Background particle grid -->
+    <div class="intro-bg-grid"></div>
+    <!-- Radial glow burst -->
+    <div class="intro-glow-burst"></div>
+
+    <div class="intro-content">
+      <!-- Animated logo ring -->
+      <div class="intro-logo-wrapper">
+        <div class="intro-logo-ring intro-logo-ring-1"></div>
+        <div class="intro-logo-ring intro-logo-ring-2"></div>
+        <div class="intro-logo-ring intro-logo-ring-3"></div>
+        <div class="intro-logo-icon">
+          <img src="assets/logo.png" alt="NetPin Logo">
+        </div>
+      </div>
+
+      <!-- Title -->
+      <div class="intro-title-block">
+        <h1 class="intro-title">NetPin</h1>
+        <p class="intro-tagline">Infrastructure Transparency at a Glance</p>
+      </div>
+
+      <!-- Loading bar -->
+      <div class="intro-loader">
+        <div class="intro-loader-bar"></div>
+      </div>
+    </div>
+  </div>
 
   <!-- Header -->
   <header class="site-header">

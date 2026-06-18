@@ -1,4 +1,34 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // ── Intro / Splash Screen ──────────────────────────────────────────────────
+  const introOverlay = document.getElementById('intro-overlay');
+
+  const dismissIntro = () => {
+    document.body.classList.remove('intro-active');
+    introOverlay.classList.add('is-hidden');
+    // Remove from DOM after transition ends so it doesn't block interactions
+    introOverlay.addEventListener('transitionend', () => {
+      introOverlay.remove();
+      // Remove the critical inline background override so theme takes over
+      const criticalStyle = document.querySelector('head style');
+      if (criticalStyle) criticalStyle.remove();
+    }, { once: true });
+  };
+
+  if (introOverlay) {
+    // Lock scroll during intro
+    document.body.classList.add('intro-active');
+
+    // Play once per session — skip on refresh
+    if (sessionStorage.getItem('intro-played')) {
+      dismissIntro();
+    } else {
+      sessionStorage.setItem('intro-played', '1');
+      // Loader bar animation: 1.4s delay + 1.4s duration = 2.8s total
+      // Add a small buffer for smoothness
+      setTimeout(dismissIntro, 3000);
+    }
+  }
+
   // Theme Toggle Logic
   const themeToggle = document.getElementById('theme-toggle');
   const themeIconDark = document.getElementById('theme-icon-dark');
