@@ -22,10 +22,16 @@
   <link rel="stylesheet" href="styles/components.css">
   <link rel="stylesheet" href="styles/animations.css">
 
-  <!-- Inter Font -->
+  <!-- Inter Font — loaded async so it never blocks render -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- media="print" trick: loads async, swaps to all on load -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  </noscript>
 </head>
 <body>
 
@@ -356,7 +362,10 @@
                 <div style="font-weight: bold; color: white;">NetPin Dashboard</div>
               </div>
               <div style="display: flex; flex-grow: 1; overflow: hidden; border-radius: var(--radius-lg);">
-                <img src="assets/overview.png" alt="NetPin Dashboard Snapshot" style="width: 100%; height: 100%; object-fit: cover;">
+                <picture style="width:100%;height:100%;display:flex;">
+                  <source srcset="assets/overview.webp" type="image/webp">
+                  <img src="assets/overview.png" alt="NetPin Dashboard Snapshot" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;">
+                </picture>
               </div>
             </div>
           </div>
