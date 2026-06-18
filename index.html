@@ -25,7 +25,7 @@
   <header class="site-header">
     <div class="container">
       <div class="flex items-center gap-3">
-        <div style="width: 32px; height: 32px; background: rgba(49, 46, 129, 0.4); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: var(--radius-xl); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px -1px rgba(30, 58, 138, 0.2);">
+        <div style="width: 32px; height: 32px; background: var(--logo-bg); border: 1px solid var(--logo-border); border-radius: var(--radius-xl); display: flex; align-items: center; justify-content: center; box-shadow: var(--logo-shadow); transition: all var(--transition-normal);">
           <img src="assets/logo.png" alt="NetPin Logo" style="width: 20px; height: 20px;">
         </div>
         <span class="text-2xl font-bold tracking-wider text-gradient">NetPin</span>
@@ -43,7 +43,7 @@
           <svg id="theme-icon-dark" class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
           <svg id="theme-icon-light" class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
         </button>
-        <a href="#download" class="btn btn-primary text-sm">Download Extension</a>
+        <a href="#download" class="hidden md:flex btn btn-primary text-sm">Download Extension</a>
       </div>
     </div>
   </header>
@@ -61,12 +61,12 @@
       <p class="text-xl text-muted animate-hero-delay-1" style="max-width: 600px; margin-bottom: var(--space-8);">
         NetPin is a premium browser extension that reveals server locations, uncovers hidden trackers, and analyzes the sustainability of every website you visit.
       </p>
-      <div class="flex flex-wrap justify-center gap-4 animate-hero-delay-2" style="margin-bottom: var(--space-16);">
-        <a href="#download" class="btn btn-primary text-lg" style="padding: var(--space-4) var(--space-8);">
+      <div class="hero-buttons justify-center gap-4 animate-hero-delay-2 mb-16 mx-auto items-center">
+        <a href="#download" class="btn btn-primary text-lg w-full md:w-auto justify-center" style="padding: var(--space-4) var(--space-8);">
           <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
           Download Extension
         </a>
-        <a href="#features" class="btn btn-secondary text-lg" style="padding: var(--space-4) var(--space-8);">
+        <a href="#features" class="btn btn-secondary text-lg w-full md:w-auto justify-center" style="padding: var(--space-4) var(--space-8);">
           View Features
         </a>
       </div>
@@ -441,7 +441,7 @@
     <div class="container grid grid-cols-1 md:grid-cols-4 gap-8">
       <div class="md:col-span-1">
         <div class="flex items-center gap-3" style="margin-bottom: var(--space-4);">
-          <div style="width: 32px; height: 32px; background: rgba(49, 46, 129, 0.4); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: var(--radius-xl); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px -1px rgba(30, 58, 138, 0.2);">
+          <div style="width: 32px; height: 32px; background: var(--logo-bg); border: 1px solid var(--logo-border); border-radius: var(--radius-xl); display: flex; align-items: center; justify-content: center; box-shadow: var(--logo-shadow); transition: all var(--transition-normal);">
             <img src="assets/logo.png" alt="NetPin Logo" style="width: 20px; height: 20px;">
           </div>
           <span class="text-xl font-bold tracking-wider">NetPin</span>

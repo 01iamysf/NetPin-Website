@@ -42,6 +42,16 @@ section {
 .mb-12 { margin-bottom: var(--space-12); }
 .mb-16 { margin-bottom: var(--space-16); }
 
+.w-full { width: 100%; }
+
+/* Specific Components */
+.hero-buttons {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 320px;
+}
+
 /* Display Utilities */
 .hidden { display: none; }
 
@@ -60,6 +70,13 @@ section {
   .md\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .md\:flex-col { flex-direction: column; }
   .md\:col-span-1 { grid-column: span 1 / span 1; }
+  .md\:w-auto { width: auto; }
+  
+  .hero-buttons {
+    flex-direction: row;
+    max-width: none;
+    width: auto;
+  }
 }
 
 /* Large Screens (>= 1024px) */

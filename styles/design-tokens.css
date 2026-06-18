@@ -40,6 +40,11 @@
   --map-filter: none;
   --map-opacity: 0.05;
 
+  /* Logo Wrapper Light */
+  --logo-bg: #dbeafe; 
+  --logo-border: #bfdbfe; 
+  --logo-shadow: 0 4px 6px -1px rgba(191, 219, 254, 0.5);
+
   /* Typography */
   --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
@@ -87,4 +92,9 @@
   --shadow-color: rgba(0, 0, 0, 0.3);
   --map-filter: invert(1);
   --map-opacity: 0.1;
+
+  /* Logo Wrapper Dark */
+  --logo-bg: rgba(49, 46, 129, 0.4); 
+  --logo-border: rgba(99, 102, 241, 0.3);
+  --logo-shadow: 0 4px 6px -1px rgba(30, 58, 138, 0.2);
 }
