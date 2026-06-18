@@ -214,26 +214,3 @@
   padding-bottom: var(--space-4);
   color: var(--text-muted);
 }
-
-/* Logo Wrapper */
-.logo-wrapper {
-  width: 42px;
-  height: 42px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--radius-xl);
-  background-color: rgba(59, 130, 246, 0.15);
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  flex-shrink: 0;
-  transition: background-color var(--transition-normal), border-color var(--transition-normal);
-}
-:root[data-theme="dark"] .logo-wrapper {
-  background-color: rgba(30, 58, 138, 0.5);
-  border-color: rgba(59, 130, 246, 0.4);
-}
-.logo-wrapper img {
-  width: 26px;
-  height: 26px;
-  object-fit: contain;
-}
