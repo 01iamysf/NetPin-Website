@@ -122,3 +122,42 @@ section {
   justify-content: space-between;
   height: 72px;
 }
+
+/* Mobile Menu */
+.mobile-menu {
+  position: fixed;
+  top: 72px; /* Height of header */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--bg-body);
+  z-index: 40;
+  padding: var(--space-8) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  transform: translateY(-100%);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform var(--transition-normal), opacity var(--transition-normal), visibility var(--transition-normal);
+  overflow-y: auto;
+}
+
+.mobile-menu.is-open {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-nav-link {
+  color: var(--text-main);
+  text-decoration: none;
+  width: 100%;
+  text-align: center;
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--border-color);
+  transition: color var(--transition-fast);
+}
+
+.mobile-nav-link:hover {
+  color: var(--color-blue-500);
+}

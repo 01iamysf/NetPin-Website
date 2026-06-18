@@ -45,10 +45,27 @@
           <svg id="theme-icon-light" class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
         </button>
         <!-- Mobile Menu Toggle -->
-        <button class="md:hidden btn-icon" aria-label="Open menu" style="color: var(--text-muted);">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        <button id="mobile-menu-btn" class="md:hidden btn-icon" aria-label="Open menu" style="color: var(--text-muted);">
+          <svg id="menu-icon-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          <svg id="menu-icon-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
       </div>
+    </div>
+
+    <!-- Mobile Menu Drawer -->
+    <div id="mobile-menu" class="mobile-menu">
+      <nav class="flex flex-col items-center w-full">
+        <a href="#features" class="mobile-nav-link text-xl font-bold">Features</a>
+        <a href="#how-it-works" class="mobile-nav-link text-xl font-bold">How it Works</a>
+        <a href="#privacy" class="mobile-nav-link text-xl font-bold">Privacy</a>
+        <a href="#faq" class="mobile-nav-link text-xl font-bold">FAQ</a>
+        
+        <div class="w-full mt-8 flex flex-col gap-4">
+          <button id="mobile-theme-toggle" class="btn btn-secondary w-full justify-center">
+            Toggle Theme
+          </button>
+        </div>
+      </nav>
     </div>
   </header>
 

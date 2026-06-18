@@ -19,13 +19,51 @@ document.addEventListener('DOMContentLoaded', () => {
   
   updateThemeIcon(currentTheme);
 
+  const toggleTheme = () => {
+    let theme = document.documentElement.getAttribute('data-theme');
+    theme = theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    updateThemeIcon(theme);
+  };
+
   if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
-      let theme = document.documentElement.getAttribute('data-theme');
-      theme = theme === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', theme);
-      localStorage.setItem('theme', theme);
-      updateThemeIcon(theme);
+    themeToggle.addEventListener('click', toggleTheme);
+  }
+
+  // Mobile Theme Toggle
+  const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
+  if (mobileThemeToggle) {
+    mobileThemeToggle.addEventListener('click', toggleTheme);
+  }
+
+  // Mobile Menu Logic
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuIconOpen = document.getElementById('menu-icon-open');
+  const menuIconClose = document.getElementById('menu-icon-close');
+  const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+  if (mobileMenuBtn && mobileMenu) {
+    const toggleMobileMenu = () => {
+      const isOpen = mobileMenu.classList.contains('is-open');
+      if (isOpen) {
+        mobileMenu.classList.remove('is-open');
+        menuIconOpen.style.display = 'block';
+        menuIconClose.style.display = 'none';
+        document.body.style.overflow = ''; // Restore scrolling
+      } else {
+        mobileMenu.classList.add('is-open');
+        menuIconOpen.style.display = 'none';
+        menuIconClose.style.display = 'block';
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+      }
+    };
+
+    mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+
+    mobileNavLinks.forEach(link => {
+      link.addEventListener('click', toggleMobileMenu);
     });
   }
 
