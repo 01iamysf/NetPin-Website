@@ -227,7 +227,9 @@ section {
 }
 
 .docs-section {
-  margin-bottom: var(--space-16);
+  margin-bottom: var(--space-12);
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .docs-section h2 {
@@ -273,4 +275,6 @@ section {
   font-size: 0.9rem;
   margin-bottom: var(--space-4);
   color: var(--text-main);
+  white-space: pre-wrap;
+  word-break: break-word;
 }
