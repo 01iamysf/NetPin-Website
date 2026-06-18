@@ -3,6 +3,23 @@
   box-sizing: border-box;
 }
 
+/* ── Global Theme Transition ────────────────────────────────────────────────
+   Applied by JS for one frame during a theme switch so every element
+   cross-fades its colors instead of snapping.
+   Using a class lets us turn it OFF after the transition to avoid
+   fighting scroll-driven / hero animations.
+──────────────────────────────────────────────────────────────────────────── */
+.theme-transitioning,
+.theme-transitioning *,
+.theme-transitioning *::before,
+.theme-transitioning *::after {
+  transition:
+    background-color 350ms cubic-bezier(0.4, 0, 0.2, 1),
+    color            350ms cubic-bezier(0.4, 0, 0.2, 1),
+    border-color     350ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow       350ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -19,7 +36,9 @@ body {
   font-family: var(--font-sans);
   background-color: var(--bg-body);
   color: var(--text-main);
-  transition: background-color var(--transition-normal), color var(--transition-normal);
+  /* Base transition — theme-transitioning class overrides this during switch */
+  transition: background-color 350ms cubic-bezier(0.4, 0, 0.2, 1),
+              color 350ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 img, picture, video, canvas, svg {

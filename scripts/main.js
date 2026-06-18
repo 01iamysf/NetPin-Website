@@ -50,11 +50,23 @@ document.addEventListener('DOMContentLoaded', () => {
   updateThemeIcon(currentTheme);
 
   const toggleTheme = () => {
-    let theme = document.documentElement.getAttribute('data-theme');
-    theme = theme === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-    updateThemeIcon(theme);
+    // Add the global transition class BEFORE changing the theme
+    // so every element cross-fades its colors simultaneously
+    document.documentElement.classList.add('theme-transitioning');
+
+    // rAF ensures the class is painted before we flip the theme
+    requestAnimationFrame(() => {
+      let theme = document.documentElement.getAttribute('data-theme');
+      theme = theme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      updateThemeIcon(theme);
+
+      // Remove the class after the transition finishes (350ms + buffer)
+      setTimeout(() => {
+        document.documentElement.classList.remove('theme-transitioning');
+      }, 400);
+    });
   };
 
   if (themeToggle) {
