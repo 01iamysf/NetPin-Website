@@ -161,3 +161,116 @@ section {
 .mobile-nav-link:hover {
   color: var(--color-blue-500);
 }
+
+/* Documentation Layout */
+.docs-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-16);
+}
+
+@media (min-width: 768px) {
+  .docs-layout {
+    grid-template-columns: 280px 1fr;
+    gap: var(--space-12);
+  }
+}
+
+.docs-sidebar {
+  position: sticky;
+  top: 100px;
+  height: max-content;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  border-right: 1px solid var(--border-color);
+  padding-right: var(--space-6);
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .docs-sidebar {
+    display: block;
+  }
+}
+
+.docs-nav-link {
+  display: block;
+  padding: var(--space-2) 0;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color var(--transition-fast);
+}
+
+.docs-nav-link:hover, .docs-nav-link.active {
+  color: var(--color-blue-500);
+  font-weight: 600;
+}
+
+.docs-nav-group {
+  margin-bottom: var(--space-6);
+}
+
+.docs-nav-group-title {
+  font-weight: 800;
+  color: var(--text-main);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-3);
+}
+
+.docs-content {
+  min-width: 0;
+}
+
+.docs-section {
+  margin-bottom: var(--space-16);
+}
+
+.docs-section h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: var(--space-4);
+  color: var(--text-main);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: var(--space-2);
+}
+
+.docs-section h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-3);
+  color: var(--text-main);
+}
+
+.docs-section p {
+  color: var(--text-muted);
+  margin-bottom: var(--space-4);
+  line-height: 1.7;
+}
+
+.docs-section ul, .docs-section ol {
+  margin-bottom: var(--space-4);
+  padding-left: var(--space-6);
+  color: var(--text-muted);
+}
+
+.docs-section li {
+  margin-bottom: var(--space-2);
+}
+
+.docs-code-block {
+  background-color: var(--bg-card-hover);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: var(--space-4);
+  overflow-x: auto;
+  font-family: monospace;
+  font-size: 0.9rem;
+  margin-bottom: var(--space-4);
+  color: var(--text-main);
+}
