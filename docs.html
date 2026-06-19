@@ -38,10 +38,17 @@
   <header class="site-header">
     <div class="container">
       <div class="flex items-center gap-3">
-        <div style="width: 32px; height: 32px; background: var(--logo-bg); border: 1px solid var(--logo-border); border-radius: var(--radius-xl); display: flex; align-items: center; justify-content: center; box-shadow: var(--logo-shadow); transition: all var(--transition-normal);">
-          <img src="assets/logo.png" alt="NetPin Logo" style="width: 20px; height: 20px;">
-        </div>
-        <a href="index.html" class="text-2xl font-bold tracking-wider text-gradient" style="text-decoration: none;">NetPin</a>
+        <a href="index.html" style="display: flex; align-items: center; gap: 0.75rem; text-decoration: none;">
+          <div class="logo-animated logo-animated--sm">
+            <div class="logo-animated__ring logo-animated__ring--1"></div>
+            <div class="logo-animated__ring logo-animated__ring--2"></div>
+            <div class="logo-animated__ring logo-animated__ring--3"></div>
+            <div class="logo-animated__icon">
+              <img src="assets/logo.png" alt="NetPin Logo">
+            </div>
+          </div>
+          <span class="text-2xl font-bold tracking-wider text-gradient">NetPin</span>
+        </a>
       </div>
       
       <nav class="hidden md:flex gap-6 items-center">
