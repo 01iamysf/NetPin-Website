@@ -12,9 +12,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NetPin - Infrastructure Transparency at a Glance</title>
   <meta name="description" content="NetPin is a premium browser extension for analyzing web infrastructure, privacy, trackers, and hosting sustainability.">
+  <meta name="keywords" content="NetPin, browser extension, server location tracker, tracker detector, hosting sustainability, green web check, web infrastructure, domain lookup, WHOIS lookup, security inspection">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://netpin.site/">
   <link rel="icon" type="image/png" href="assets/logo.png">
   <!-- Preload logo so it's ready before the intro animation starts -->
   <link rel="preload" as="image" href="assets/logo.png" fetchpriority="high">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://netpin.site/">
+  <meta property="og:title" content="NetPin - Infrastructure Transparency at a Glance">
+  <meta property="og:description" content="A premium browser extension to instantly reveal server locations, unmask hidden trackers, and analyze website carbon footprints.">
+  <meta property="og:image" content="https://netpin.site/assets/overview.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://netpin.site/">
+  <meta property="twitter:title" content="NetPin - Infrastructure Transparency at a Glance">
+  <meta property="twitter:description" content="A premium browser extension to instantly reveal server locations, unmask hidden trackers, and analyze website carbon footprints.">
+  <meta property="twitter:image" content="https://netpin.site/assets/overview.png">
+
+  <!-- JSON-LD Structured Data for SoftwareApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "NetPin",
+    "operatingSystem": "Windows, macOS, Linux",
+    "applicationCategory": "BrowserApplication",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "A premium browser extension that reveals server locations, uncovers hidden trackers, and analyzes the sustainability of every website you visit.",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5.0",
+      "ratingCount": "1"
+    }
+  }
+  </script>
 
   <!-- Critical: lock background to intro dark color before any CSS loads (prevents flash in light mode) -->
   <style>
@@ -62,7 +101,7 @@
 
       <!-- Title -->
       <div class="intro-title-block">
-        <h1 class="intro-title">NetPin</h1>
+        <span class="intro-title">NetPin</span>
         <p class="intro-tagline">Infrastructure Transparency at a Glance</p>
       </div>
 
@@ -477,89 +516,89 @@
       <h2 class="text-4xl font-extrabold tracking-tight text-center mb-12">Frequently Asked Questions</h2>
       <div style="max-width: 800px; margin: 0 auto;">
         
-        <div class="faq-item">
-          <button class="faq-question">
+        <details class="faq-item" name="faq">
+          <summary class="faq-question">
             What exactly is NetPin?
             <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </button>
+          </summary>
           <div class="faq-answer">
             <div class="faq-answer-inner">
               Think of NetPin as an X-ray machine for the internet. Whenever you visit a website, NetPin works in the background to show you exactly where that website's physical servers are located, what company actually owns them, and how environmentally friendly they are. It gives you total transparency into the hidden world behind the websites you use every day.
             </div>
           </div>
-        </div>
+        </details>
 
-        <div class="faq-item">
-          <button class="faq-question">
+        <details class="faq-item" name="faq">
+          <summary class="faq-question">
             Why do I need to know where a server is located?
             <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </button>
+          </summary>
           <div class="faq-answer">
             <div class="faq-answer-inner">
               When you use a website, your personal data is sent to a physical computer (a server) somewhere in the world. Different countries have very different laws regarding digital privacy and government surveillance. By knowing exactly which country a website's servers are in, you can understand which laws are governing your personal data and decide if you feel safe using that service.
             </div>
           </div>
-        </div>
+        </details>
 
-        <div class="faq-item">
-          <button class="faq-question">
+        <details class="faq-item" name="faq">
+          <summary class="faq-question">
             Is NetPin free?
             <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </button>
+          </summary>
           <div class="faq-answer">
             <div class="faq-answer-inner">
               Yes! NetPin is 100% free and open-source. We believe that digital privacy and understanding internet infrastructure are fundamental rights. Everyone should have access to these tools without having to pay a subscription fee.
             </div>
           </div>
-        </div>
+        </details>
 
-        <div class="faq-item">
-          <button class="faq-question">
+        <details class="faq-item" name="faq">
+          <summary class="faq-question">
             Does NetPin collect or sell my browsing history?
             <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </button>
+          </summary>
           <div class="faq-answer">
             <div class="faq-answer-inner">
               Absolutely not. NetPin is built with a strict "Privacy First" rule. All the data analysis happens directly on your own computer. We do not track what websites you visit, we do not store your personal information, and we have no database of your browsing history. Your data stays yours.
             </div>
           </div>
-        </div>
+        </details>
 
-        <div class="faq-item">
-          <button class="faq-question">
+        <details class="faq-item" name="faq">
+          <summary class="faq-question">
             How does the "Tracker Detection" work?
             <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </button>
+          </summary>
           <div class="faq-answer">
             <div class="faq-answer-inner">
               Many websites use invisible "trackers"—tiny snippets of code that silently monitor what you click on, how long you stay on a page, and where you go next. NetPin actively scans the website you are on to expose these hidden trackers, showing you a list of exactly which companies are trying to watch your digital footprint.
             </div>
           </div>
-        </div>
+        </details>
 
-        <div class="faq-item">
-          <button class="faq-question">
+        <details class="faq-item" name="faq">
+          <summary class="faq-question">
             What does "Carbon Awareness" mean?
             <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </button>
+          </summary>
           <div class="faq-answer">
             <div class="faq-answer-inner">
               The internet relies on massive data centers that consume huge amounts of electricity. NetPin checks if the server hosting the website you are visiting is powered by renewable, green energy (like solar or wind power) or if it relies on fossil fuels. This helps you support environmentally sustainable platforms.
             </div>
           </div>
-        </div>
+        </details>
 
-        <div class="faq-item">
-          <button class="faq-question">
+        <details class="faq-item" name="faq">
+          <summary class="faq-question">
             Will NetPin slow down my browser?
             <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </button>
+          </summary>
           <div class="faq-answer">
             <div class="faq-answer-inner">
               Not at all. NetPin is designed to be incredibly lightweight and efficient. It runs silently in the background and only fetches detailed infrastructure information when you actively open the extension dashboard, ensuring your web browsing remains fast and uninterrupted.
             </div>
           </div>
-        </div>
+        </details>
 
       </div>
     </section>

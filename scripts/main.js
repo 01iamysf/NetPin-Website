@@ -129,22 +129,58 @@ document.addEventListener('DOMContentLoaded', () => {
   // 1. FAQ Accordion Logic
   const faqItems = document.querySelectorAll('.faq-item');
   faqItems.forEach(item => {
-    const question = item.querySelector('.faq-question');
+    const summary = item.querySelector('.faq-question');
     const answer = item.querySelector('.faq-answer');
     
-    question.addEventListener('click', () => {
-      const isActive = item.classList.contains('active');
+    summary.addEventListener('click', (e) => {
+      e.preventDefault(); // Prevent native instant toggle
+      
+      const isOpen = item.hasAttribute('open');
       
       // Close all other items
       faqItems.forEach(otherItem => {
-        otherItem.classList.remove('active');
-        otherItem.querySelector('.faq-answer').style.maxHeight = null;
+        if (otherItem !== item && otherItem.hasAttribute('open')) {
+          const otherAnswer = otherItem.querySelector('.faq-answer');
+          otherAnswer.style.maxHeight = otherAnswer.scrollHeight + 'px';
+          // Force reflow
+          otherAnswer.offsetHeight;
+          otherAnswer.style.maxHeight = '0px';
+          otherItem.classList.remove('active');
+          setTimeout(() => {
+            if (!otherItem.classList.contains('active')) {
+              otherItem.removeAttribute('open');
+            }
+          }, 350); // Match transition-normal (350ms)
+        }
       });
       
-      // Toggle current item
-      if (!isActive) {
+      if (!isOpen) {
+        // Open
+        item.setAttribute('open', '');
         item.classList.add('active');
+        answer.style.maxHeight = '0px';
+        // Force reflow
+        answer.offsetHeight;
         answer.style.maxHeight = answer.scrollHeight + 'px';
+        // Clean up maxHeight after transition to support responsive resizing
+        setTimeout(() => {
+          if (item.classList.contains('active')) {
+            answer.style.maxHeight = 'none';
+          }
+        }, 350);
+      } else {
+        // Close
+        // Ensure max-height has a concrete value before animating to 0
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+        // Force reflow
+        answer.offsetHeight;
+        answer.style.maxHeight = '0px';
+        item.classList.remove('active');
+        setTimeout(() => {
+          if (!item.classList.contains('active')) {
+            item.removeAttribute('open');
+          }
+        }, 350);
       }
     });
   });

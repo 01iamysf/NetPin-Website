@@ -300,17 +300,27 @@
   border: none;
   color: var(--text-main);
   font-size: 1.125rem;
+  list-style: none; /* Hide default marker in Firefox */
+}
+/* Hide default marker in Webkit/Chrome/Safari */
+.faq-question::-webkit-details-marker {
+  display: none;
 }
 .faq-icon {
   transition: transform var(--transition-fast);
 }
-.faq-item.active .faq-icon {
+.faq-item.active .faq-icon,
+.faq-item[open] .faq-icon {
   transform: rotate(180deg);
 }
 .faq-answer {
   max-height: 0;
   overflow: hidden;
   transition: max-height var(--transition-normal) ease-out;
+}
+/* If JS is disabled, details is open and we should show the answer */
+.faq-item[open] .faq-answer {
+  max-height: none;
 }
 .faq-answer-inner {
   padding-bottom: var(--space-4);
