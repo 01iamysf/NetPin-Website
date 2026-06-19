@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
+  <!-- Inline theme restore: must run before CSS paints to avoid FOUC -->
+  <script>
+    (function() {
+      var t = localStorage.getItem('theme');
+      if (t) document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Documentation - NetPin</title>
@@ -19,8 +26,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --font-sans: "Times New Roman", Times, serif !important;
+    /* Docs page layout offset for fixed navbar */
+    main.docs-main {
+      padding-top: calc(72px + 2.5rem);
     }
   </style>
 </head>
@@ -74,7 +82,7 @@
     </nav>
   </div>
 
-  <main class="container">
+  <main class="container docs-main">
     <div class="docs-layout">
       <!-- Sidebar -->
       <aside class="docs-sidebar">

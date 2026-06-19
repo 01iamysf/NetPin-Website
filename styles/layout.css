@@ -185,22 +185,21 @@ section {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-8);
-  margin-top: var(--space-8);
   margin-bottom: var(--space-16);
 }
 
 @media (min-width: 768px) {
   .docs-layout {
-    grid-template-columns: 280px 1fr;
+    grid-template-columns: 260px 1fr;
     gap: var(--space-12);
   }
 }
 
 .docs-sidebar {
   position: sticky;
-  top: 100px;
+  top: 88px;
   height: max-content;
-  max-height: calc(100vh - 120px);
+  max-height: calc(100vh - 108px);
   overflow-y: auto;
   border-right: 1px solid var(--border-color);
   padding-right: var(--space-6);

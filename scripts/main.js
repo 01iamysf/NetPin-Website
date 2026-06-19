@@ -34,10 +34,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const themeIconDark = document.getElementById('theme-icon-dark');
   const themeIconLight = document.getElementById('theme-icon-light');
   
-  const currentTheme = localStorage.getItem('theme') || document.documentElement.getAttribute('data-theme') || 'light';
+  // Always prefer localStorage — this keeps theme consistent across pages
+  const savedTheme = localStorage.getItem('theme');
+  const htmlTheme = document.documentElement.getAttribute('data-theme');
+  const currentTheme = savedTheme || htmlTheme || 'dark';
   document.documentElement.setAttribute('data-theme', currentTheme);
+  // Also persist so next page load is consistent
+  localStorage.setItem('theme', currentTheme);
 
   const updateThemeIcon = (theme) => {
+    if (!themeIconDark || !themeIconLight) return;
     if (theme === 'dark') {
       themeIconDark.style.display = 'block';
       themeIconLight.style.display = 'none';
@@ -50,6 +56,17 @@ document.addEventListener('DOMContentLoaded', () => {
   updateThemeIcon(currentTheme);
 
   const toggleTheme = () => {
+    // Close mobile menu first to avoid mixed-state visual glitch
+    const mobileMenuEl = document.getElementById('mobile-menu');
+    const menuIconOpenEl = document.getElementById('menu-icon-open');
+    const menuIconCloseEl = document.getElementById('menu-icon-close');
+    if (mobileMenuEl && mobileMenuEl.classList.contains('is-open')) {
+      mobileMenuEl.classList.remove('is-open');
+      if (menuIconOpenEl) menuIconOpenEl.style.display = 'block';
+      if (menuIconCloseEl) menuIconCloseEl.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
     // Add the global transition class BEFORE changing the theme
     // so every element cross-fades its colors simultaneously
     document.documentElement.classList.add('theme-transitioning');
