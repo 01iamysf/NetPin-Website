@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const themeIconDark = document.getElementById('theme-icon-dark');
   const themeIconLight = document.getElementById('theme-icon-light');
   
-  const currentTheme = localStorage.getItem('theme') || document.documentElement.getAttribute('data-theme') || 'light';
+  const currentTheme = localStorage.getItem('theme') || 'dark';
   document.documentElement.setAttribute('data-theme', currentTheme);
 
   const updateThemeIcon = (theme) => {
