@@ -114,6 +114,7 @@
           <div class="docs-nav-group-title">Getting Started</div>
           <a href="#introduction" class="docs-nav-link active">Introduction</a>
           <a href="#installation" class="docs-nav-link">Installation</a>
+          <a href="#usage-guide" class="docs-nav-link">Usage Guide</a>
         </div>
         <div class="docs-nav-group">
           <div class="docs-nav-group-title">Concepts</div>
@@ -147,13 +148,20 @@
             git clone https://github.com/01iamysf/NetPin.git
           </div>
 
-          <h3>Step 2: Load into Chrome</h3>
+          <h3>Step 2: Build the Extension</h3>
+          <p>NetPin uses Vite for a modern development experience. Install dependencies and build the project:</p>
+          <div class="docs-code-block">
+            npm install
+            npm run build
+          </div>
+
+          <h3>Step 3: Load into Chrome</h3>
           <ol>
             <li>Open Google Chrome or any Chromium-based browser (Edge, Brave, Arc).</li>
             <li>Navigate to <code>chrome://extensions</code> in your URL bar.</li>
             <li>In the top right corner, toggle <strong>Developer mode</strong> to ON.</li>
             <li>Click the <strong>Load unpacked</strong> button that appears in the top left.</li>
-            <li>Select the <code>NetPin</code> directory you cloned in Step 1.</li>
+            <li>Select the newly generated <code>dist</code> directory inside the NetPin folder.</li>
           </ol>
           <p>The extension should now appear in your browser's toolbar. Pin it for quick access!</p>
         </section>
@@ -167,6 +175,19 @@
 
           <h3>IP Geolocation APIs</h3>
           <p>Once the IP is retrieved, NetPin queries our decentralized nodes to map the IP address to a physical geolocation, ISP, and sustainability score. These queries are proxied to ensure that your originating IP address is never exposed to the endpoint.</p>
+
+          <h3>Features Overview</h3>
+          <p>NetPin is built with several advanced modules:</p>
+          <ul>
+            <li><strong>Domain Intelligence:</strong> Performs deep WHOIS lookups to expose registrar data and intelligently detects when domain owners use privacy masking services.</li>
+            <li><strong>Data Journey Visualization:</strong> Maps out the network hops your data takes from your local device through your ISP to the destination server.</li>
+            <li><strong>Tracker Blocking:</strong> Integrates with Chrome's DeclarativeNetRequest API to actively monitor and block malicious trackers.</li>
+          </ul>
+        </section>
+
+        <section id="usage-guide" class="docs-section">
+          <h2>Usage Guide</h2>
+          <p>Once installed, click the NetPin icon in your browser toolbar while visiting any website. It will instantly present a high-level overview of the site's privacy and infrastructure. Click <strong>Open Full Dashboard</strong> to dive into the interactive map, 3D globe, and connection tracking visualizations.</p>
         </section>
 
         <section id="privacy-policy" class="docs-section">
