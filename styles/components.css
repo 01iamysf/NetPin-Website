@@ -126,6 +126,7 @@
 .tracking-wide { letter-spacing: 0.025em; }
 
 .text-center { text-align: center; }
+.text-left { text-align: left; }
 
 /* Cards */
 .card {
