@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── Intro / Splash Screen ──────────────────────────────────────────────────
   const introOverlay = document.getElementById('intro-overlay');
 
-  const dismissIntro = () => {
+  const dismissIntro = () => { 
     document.body.classList.remove('intro-active');
     introOverlay.classList.add('is-hidden');
     // Remove from DOM after transition ends so it doesn't block interactions
