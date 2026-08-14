@@ -1,36 +1,57 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
-  <!-- Inline theme restore: must run before CSS paints to avoid FOUC -->
-  <script>
-    (function() {
-      var t = localStorage.getItem('theme');
-      if (t) document.documentElement.setAttribute('data-theme', t);
-    })();
-  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NetPin Developer Documentation - Browser Extension Guide</title>
-  <meta name="description" content="Access the official developer documentation for NetPin. Learn about Manifest V3 architecture, background service workers, and IP Geolocation APIs.">
+  
+  <!-- Critical inline background -->
+  <style>
+    html, body { background-color: #f8fafc; }
+  </style>
+
+  <!-- Title & SEO Meta Tags -->
+  <title>NetPin Developer Documentation - Chrome Extension Architecture Guide</title>
+  <meta name="description" content="Official developer documentation for NetPin. Learn about Manifest V3 architecture, background service workers, network webRequest APIs, IP Geolocation, and WHOIS lookup modules.">
   <meta name="keywords" content="NetPin documentation, developer guide, browser extension architecture, Manifest V3 background service worker, IP Geolocation API, web extension build">
-  <meta name="robots" content="index, follow">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <link rel="canonical" href="https://netpin.site/docs.html">
   <link rel="icon" type="image/png" href="assets/logo.png">
 
   <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
+  <meta property="og:type" content="article">
   <meta property="og:url" content="https://netpin.site/docs.html">
-  <meta property="og:title" content="NetPin Developer Documentation - Browser Extension Guide">
-  <meta property="og:description" content="Access the official developer documentation for NetPin. Learn about Manifest V3 architecture, background service workers, and IP Geolocation APIs.">
+  <meta property="og:title" content="NetPin Developer Documentation - Extension Architecture Guide">
+  <meta property="og:description" content="Explore the technical architecture, Manifest V3 service worker design, and IP Geolocation implementation of NetPin.">
   <meta property="og:image" content="https://netpin.site/assets/overview.png">
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://netpin.site/docs.html">
-  <meta property="twitter:title" content="NetPin Developer Documentation - Browser Extension Guide">
-  <meta property="twitter:description" content="Access the official developer documentation for NetPin. Learn about Manifest V3 architecture, background service workers, and IP Geolocation APIs.">
+  <meta property="twitter:title" content="NetPin Developer Documentation - Extension Architecture Guide">
+  <meta property="twitter:description" content="Explore the technical architecture, Manifest V3 service worker design, and IP Geolocation implementation of NetPin.">
   <meta property="twitter:image" content="https://netpin.site/assets/overview.png">
-  
+
+  <!-- JSON-LD TechArticle Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "NetPin Extension Developer Documentation",
+    "description": "Comprehensive technical documentation for building, extending, and auditing the NetPin browser extension.",
+    "url": "https://netpin.site/docs.html",
+    "author": {
+      "@type": "Organization",
+      "name": "NetPin Open Source Community",
+      "url": "https://github.com/01iamysf/NetPin"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "NetPin",
+      "url": "https://netpin.site/"
+    }
+  }
+  </script>
+
   <!-- CSS -->
   <link rel="stylesheet" href="styles/design-tokens.css">
   <link rel="stylesheet" href="styles/base.css">
@@ -43,7 +64,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    /* Docs page layout offset for fixed navbar */
     main.docs-main {
       padding-top: calc(72px + 2.5rem);
     }
@@ -51,38 +71,36 @@
 </head>
 <body>
 
-  <!-- Header -->
+  <!-- Header Navigation -->
   <header class="site-header">
     <div class="container">
-      <div class="flex items-center gap-3">
-        <a href="index.html" style="display: flex; align-items: center; gap: 0.75rem; text-decoration: none;">
-          <div class="logo-animated logo-animated--sm">
-            <div class="logo-animated__ring logo-animated__ring--1"></div>
-            <div class="logo-animated__ring logo-animated__ring--2"></div>
-            <div class="logo-animated__ring logo-animated__ring--3"></div>
-            <div class="logo-animated__icon">
-              <img src="assets/logo.png" alt="NetPin Logo">
-            </div>
+      <a href="index.html" class="flex items-center gap-3" aria-label="NetPin Home Page">
+        <div class="logo-animated logo-animated--sm">
+          <div class="logo-animated__ring logo-animated__ring--1"></div>
+          <div class="logo-animated__ring logo-animated__ring--2"></div>
+          <div class="logo-animated__ring logo-animated__ring--3"></div>
+          <div class="logo-animated__icon">
+            <img src="assets/logo.png" alt="NetPin Logo">
           </div>
-          <span class="text-2xl font-bold tracking-wider text-gradient">NetPin</span>
-        </a>
-      </div>
+        </div>
+        <span class="text-2xl font-bold tracking-wider text-gradient">NetPin</span>
+      </a>
       
-      <nav class="hidden md:flex gap-6 items-center">
+      <nav class="hidden md:flex gap-6 items-center" aria-label="Docs Header Navigation">
         <a href="index.html#features" class="text-sm font-bold text-muted hover:text-primary transition">Features</a>
         <a href="index.html#how-it-works" class="text-sm font-bold text-muted hover:text-primary transition">How it Works</a>
+        <a href="index.html#community" class="text-sm font-bold text-muted hover:text-primary transition">Community</a>
         <a href="index.html#privacy" class="text-sm font-bold text-muted hover:text-primary transition">Privacy</a>
         <a href="index.html#faq" class="text-sm font-bold text-muted hover:text-primary transition">FAQ</a>
       </nav>
 
       <div class="flex gap-4 items-center">
-        <!-- Desktop Theme Toggle -->
-        <button id="theme-toggle" class="hidden md:flex btn-icon" aria-label="Toggle theme">
-          <svg id="theme-icon-dark" class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-          <svg id="theme-icon-light" class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-        </button>
-        <!-- Mobile Menu Toggle -->
-        <button id="mobile-menu-btn" class="md:hidden btn-icon" aria-label="Open menu" style="color: var(--text-muted);">
+        <a href="https://github.com/01iamysf/NetPin" target="_blank" rel="noopener noreferrer" class="hidden md:inline-flex btn btn-secondary text-sm" style="min-height: 40px; padding: var(--space-2) var(--space-4);">
+          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+          GitHub
+        </a>
+
+        <button id="mobile-menu-btn" class="md:hidden btn-icon" aria-label="Toggle navigation menu">
           <svg id="menu-icon-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
           <svg id="menu-icon-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
@@ -90,18 +108,21 @@
     </div>
   </header>
 
-  <!-- Mobile Menu Drawer -->
-  <div id="mobile-menu" class="mobile-menu">
+  <!-- Mobile Navigation Drawer -->
+  <div id="mobile-menu" class="mobile-menu" aria-label="Mobile Navigation">
     <nav class="flex flex-col items-center w-full">
+      <a href="index.html" class="mobile-nav-link text-xl font-bold">Home Page</a>
       <a href="index.html#features" class="mobile-nav-link text-xl font-bold">Features</a>
       <a href="index.html#how-it-works" class="mobile-nav-link text-xl font-bold">How it Works</a>
+      <a href="index.html#community" class="mobile-nav-link text-xl font-bold">Community</a>
       <a href="index.html#privacy" class="mobile-nav-link text-xl font-bold">Privacy</a>
       <a href="index.html#faq" class="mobile-nav-link text-xl font-bold">FAQ</a>
       
       <div class="w-full mt-8 flex flex-col gap-4">
-        <button id="mobile-theme-toggle" class="btn btn-secondary w-full justify-center">
-          Toggle Theme
-        </button>
+        <a href="https://github.com/01iamysf/NetPin" target="_blank" rel="noopener noreferrer" class="btn btn-primary w-full justify-center text-lg">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+          Get on GitHub
+        </a>
       </div>
     </nav>
   </div>
@@ -109,17 +130,17 @@
   <main class="container docs-main">
     <div class="docs-layout">
       <!-- Sidebar -->
-      <aside class="docs-sidebar">
+      <aside class="docs-sidebar" aria-label="Documentation Table of Contents">
         <div class="docs-nav-group">
           <div class="docs-nav-group-title">Getting Started</div>
           <a href="#introduction" class="docs-nav-link active">Introduction</a>
-          <a href="#installation" class="docs-nav-link">Installation</a>
-          <a href="#usage-guide" class="docs-nav-link">Usage Guide</a>
+          <a href="#installation" class="docs-nav-link">Installation Guide</a>
+          <a href="#usage-guide" class="docs-nav-link">Usage Instructions</a>
         </div>
         <div class="docs-nav-group">
-          <div class="docs-nav-group-title">Concepts</div>
-          <a href="#architecture" class="docs-nav-link">Architecture</a>
-          <a href="#privacy-policy" class="docs-nav-link">Data Privacy</a>
+          <div class="docs-nav-group-title">Architecture</div>
+          <a href="#architecture" class="docs-nav-link">Manifest V3 Design</a>
+          <a href="#privacy-policy" class="docs-nav-link">Data Sovereignty</a>
         </div>
         <div class="docs-nav-group">
           <div class="docs-nav-group-title">Community</div>
@@ -129,91 +150,72 @@
 
       <!-- Main Content -->
       <div class="docs-content">
-        <div class="badge badge-emerald mb-4">Documentation</div>
-        <h1 class="text-5xl font-extrabold tracking-tight mb-8">NetPin Developer Docs</h1>
+        <div class="badge badge-emerald mb-4">Official Documentation</div>
+        <h1 class="text-5xl font-extrabold tracking-tight mb-8" style="color: var(--text-main);">NetPin Extension Documentation</h1>
         
         <section id="introduction" class="docs-section">
           <h2>Introduction</h2>
-          <p>Welcome to the official documentation for NetPin. NetPin is a highly optimized, fully open-source Chrome extension that reveals the physical server location and infrastructure details of any website you visit.</p>
-          <p>By empowering users with data transparency, NetPin forces hosting providers and large tech corporations to be accountable for where data is being routed and stored globally.</p>
+          <p>Welcome to the official developer documentation for NetPin. NetPin is an open-source Chrome extension that reveals server location geolocations, ASN network routing, WHOIS ownership, and hidden trackers for active website tabs.</p>
+          <p>Built with performance and data privacy at its core, NetPin enables users to inspect infrastructure without submitting browsing logs or personal identifiers.</p>
         </section>
 
         <section id="installation" class="docs-section">
           <h2>Installation (Developer Mode)</h2>
-          <p>Since NetPin is actively in development and currently bypassing the Chrome Web Store for faster iterations, you will need to manually install it via Developer Mode.</p>
+          <p>To load NetPin manually into any Chromium-based browser (Google Chrome, Microsoft Edge, Brave, Arc), follow these steps:</p>
           
-          <h3>Step 1: Download the Source</h3>
-          <p>First, clone the NetPin repository to your local machine using git:</p>
-          <div class="docs-code-block">
-            git clone https://github.com/01iamysf/NetPin.git
-          </div>
+          <h3>Step 1: Clone Repository</h3>
+          <p>Clone the source repository from GitHub to your local environment:</p>
+          <div class="docs-code-block">git clone https://github.com/01iamysf/NetPin.git</div>
 
-          <h3>Step 2: Build the Extension</h3>
-          <p>NetPin uses Vite for a modern development experience. Install dependencies and build the project:</p>
-          <div class="docs-code-block">
-            npm install
-            npm run build
-          </div>
+          <h3>Step 2: Build Extension Bundle</h3>
+          <p>Install Node dependencies and execute the build script:</p>
+          <div class="docs-code-block">cd NetPin
+npm install
+npm run build</div>
 
-          <h3>Step 3: Load into Chrome</h3>
+          <h3>Step 3: Load Unpacked Extension</h3>
           <ol>
-            <li>Open Google Chrome or any Chromium-based browser (Edge, Brave, Arc).</li>
-            <li>Navigate to <code>chrome://extensions</code> in your URL bar.</li>
-            <li>In the top right corner, toggle <strong>Developer mode</strong> to ON.</li>
-            <li>Click the <strong>Load unpacked</strong> button that appears in the top left.</li>
-            <li>Select the newly generated <code>dist</code> directory inside the NetPin folder.</li>
+            <li>Open your browser and navigate to <code>chrome://extensions</code>.</li>
+            <li>Toggle <strong>Developer mode</strong> ON in the top right corner.</li>
+            <li>Click <strong>Load unpacked</strong> in the top left corner.</li>
+            <li>Select the generated <code>dist</code> folder within your local repository directory.</li>
           </ol>
-          <p>The extension should now appear in your browser's toolbar. Pin it for quick access!</p>
         </section>
 
         <section id="architecture" class="docs-section">
-          <h2>Architecture</h2>
-          <p>NetPin is built using the latest Manifest V3 specifications for Chrome Extensions to guarantee maximum performance and security.</p>
+          <h2>Extension Architecture</h2>
+          <p>NetPin is built upon the Chrome Manifest V3 standard to optimize memory consumption and execution security.</p>
           
           <h3>Background Service Worker</h3>
-          <p>The core of NetPin runs inside a non-persistent background Service Worker. It utilizes the <code>chrome.webRequest</code> API to passively observe the network requests a website makes. When a new top-level navigation occurs, it resolves the IP address of the destination server.</p>
+          <p>NetPin utilizes a background Service Worker that listens passively to <code>chrome.webRequest</code> navigation events. When top-level domain requests occur, the service worker resolves the remote host's IP address.</p>
 
-          <h3>IP Geolocation APIs</h3>
-          <p>Once the IP is retrieved, NetPin queries our decentralized nodes to map the IP address to a physical geolocation, ISP, and sustainability score. These queries are proxied to ensure that your originating IP address is never exposed to the endpoint.</p>
-
-          <h3>Features Overview</h3>
-          <p>NetPin is built with several advanced modules:</p>
-          <ul>
-            <li><strong>Domain Intelligence:</strong> Performs deep WHOIS lookups to expose registrar data and intelligently detects when domain owners use privacy masking services.</li>
-            <li><strong>Data Journey Visualization:</strong> Maps out the network hops your data takes from your local device through your ISP to the destination server.</li>
-            <li><strong>Tracker Blocking:</strong> Integrates with Chrome's DeclarativeNetRequest API to actively monitor and block malicious trackers.</li>
-          </ul>
+          <h3>Privacy-Preserving Geolocation Queries</h3>
+          <p>Resolved IP addresses are cross-referenced with decentralized geolocation data nodes. Requests pass through proxy endpoints to ensure your originating IP address is never exposed or logged.</p>
         </section>
 
         <section id="usage-guide" class="docs-section">
           <h2>Usage Guide</h2>
-          <p>Once installed, click the NetPin icon in your browser toolbar while visiting any website. It will instantly present a high-level overview of the site's privacy and infrastructure. Click <strong>Open Full Dashboard</strong> to dive into the interactive map, 3D globe, and connection tracking visualizations.</p>
+          <p>After loading the extension, click the NetPin icon in your browser toolbar while visiting any site. The popup panel displays physical location maps, hosting ASN details, tracker counts, and green energy ratings instantly.</p>
         </section>
 
         <section id="privacy-policy" class="docs-section">
-          <h2>Data Privacy</h2>
-          <p>We believe in absolute data sovereignty. NetPin is designed with a strict "Local-First" architecture.</p>
+          <h2>Data Sovereignty & Privacy</h2>
+          <p>NetPin adheres to a strict local-first model:</p>
           <ul>
-            <li><strong>No Tracking:</strong> We do not use Google Analytics or any third-party telemetry scripts.</li>
-            <li><strong>No Central Database:</strong> Your queries are processed on-the-fly and immediately discarded. We have no user accounts and no logs.</li>
-            <li><strong>Open Source Auditability:</strong> Our codebase is public. You do not need to trust us; you can compile the extension yourself.</li>
+            <li><strong>Zero Tracking:</strong> No analytics scripts or tracking pixels are included.</li>
+            <li><strong>No Central Database:</strong> Queries are processed statelessly and discarded immediately.</li>
+            <li><strong>Auditability:</strong> The complete source code is available on GitHub for independent audit.</li>
           </ul>
         </section>
 
         <section id="contributing" class="docs-section">
-          <h2>Contributing</h2>
-          <p>We are actively looking for contributors! If you want to help us democratize the web, you can pick up an issue from our GitHub repository.</p>
-          <div class="docs-code-block">
-            # Create a new branch
-            git checkout -b feature/your-amazing-idea
-            
-            # Commit your changes
-            git commit -m "feat: implement amazing idea"
-            
-            # Push to the branch
-            git push origin feature/your-amazing-idea
-          </div>
-          <p>Once pushed, open a Pull Request and our maintainers will review it within 48 hours.</p>
+          <h2>Community & Contribution</h2>
+          <p>Contributions are welcomed from developers of all backgrounds. Feel free to submit bug reports, pull requests, or feature proposals across our channels:</p>
+          <ul>
+            <li><a href="https://github.com/01iamysf/NetPin" target="_blank" rel="noopener noreferrer" class="text-primary font-bold">GitHub Repository</a></li>
+            <li><a href="https://www.reddit.com/r/NetPin" target="_blank" rel="noopener noreferrer" class="text-primary font-bold">Reddit Community (r/NetPin)</a></li>
+            <li><a href="https://www.linkedin.com/company/netpin" target="_blank" rel="noopener noreferrer" class="text-primary font-bold">LinkedIn Community Page</a></li>
+          </ul>
         </section>
 
       </div>
@@ -221,66 +223,80 @@
   </main>
 
   <!-- Footer -->
-  <footer style="background-color: var(--bg-sub-card); border-top: 1px solid var(--border-color); padding: var(--space-16) 0 var(--space-8) 0;">
+  <footer style="background-color: #ffffff; border-top: 1px solid var(--border-color); padding: var(--space-16) 0 var(--space-8) 0;">
     <div class="container" style="display: flex; flex-wrap: wrap; gap: var(--space-12); justify-content: space-between;">
       
       <!-- Brand Block -->
       <div style="flex: 1 1 300px;">
-        <div class="flex items-center gap-3 mb-6">
-          <div style="width: 40px; height: 40px; background: var(--logo-bg); border: 1px solid var(--logo-border); border-radius: var(--radius-xl); display: flex; align-items: center; justify-content: center; box-shadow: var(--logo-shadow); transition: all var(--transition-normal);">
-            <img src="assets/logo.png" alt="NetPin Logo" style="width: 24px; height: 24px;">
+        <a href="index.html" class="flex items-center gap-3 mb-6" aria-label="NetPin Footer Brand Link">
+          <div class="logo-animated logo-animated--lg">
+            <div class="logo-animated__ring logo-animated__ring--1"></div>
+            <div class="logo-animated__ring logo-animated__ring--2"></div>
+            <div class="logo-animated__ring logo-animated__ring--3"></div>
+            <div class="logo-animated__icon">
+              <img src="assets/logo.png" alt="NetPin Logo">
+            </div>
           </div>
           <span class="text-2xl font-extrabold tracking-wider text-gradient">NetPin</span>
-        </div>
-        <p class="text-base text-muted" style="max-width: 320px; line-height: 1.6;">
-          Infrastructure Transparency at a Glance. Empowering users with data sovereignty and deep security insights.
+        </a>
+        <p class="text-sm text-muted" style="max-width: 320px; line-height: 1.6;">
+          Infrastructure Transparency at a Glance. Empowering users with data sovereignty and web security insights.
         </p>
       </div>
       
       <!-- Links Block -->
       <div style="flex: 2 1 400px;" class="grid grid-cols-2 md:grid-cols-3 gap-8">
         <div>
-          <h4 class="font-bold text-lg mb-4" style="color: var(--text-main);">Product</h4>
+          <h4 class="font-bold text-base mb-4" style="color: var(--text-main);">Product</h4>
           <ul class="flex flex-col gap-3">
-            <li><a href="index.html#features" class="text-base text-muted hover:text-primary transition">Features</a></li>
-            <li><a href="index.html#how-it-works" class="text-base text-muted hover:text-primary transition">How it works</a></li>
-            <li><a href="https://github.com/01iamysf/NetPin" target="_blank" rel="noopener noreferrer" class="text-base text-muted hover:text-primary transition">Download from GitHub</a></li>
+            <li><a href="index.html#features" class="text-sm text-muted hover:text-primary transition">Features</a></li>
+            <li><a href="index.html#how-it-works" class="text-sm text-muted hover:text-primary transition">How it works</a></li>
+            <li><a href="https://github.com/01iamysf/NetPin" target="_blank" rel="noopener noreferrer" class="text-sm text-muted hover:text-primary transition">Get on GitHub</a></li>
           </ul>
         </div>
         
         <div>
-          <h4 class="font-bold text-lg mb-4" style="color: var(--text-main);">Resources</h4>
+          <h4 class="font-bold text-base mb-4" style="color: var(--text-main);">Resources</h4>
           <ul class="flex flex-col gap-3">
-            <li><a href="index.html#faq" class="text-base text-muted hover:text-primary transition">FAQ</a></li>
-            <li><a href="index.html#privacy" class="text-base text-muted hover:text-primary transition">Privacy</a></li>
-            <li><a href="docs.html" class="text-base text-muted hover:text-primary transition">Documentation</a></li>
+            <li><a href="index.html#faq" class="text-sm text-muted hover:text-primary transition">FAQ</a></li>
+            <li><a href="index.html#privacy" class="text-sm text-muted hover:text-primary transition">Privacy Policy</a></li>
+            <li><a href="docs.html" class="text-sm text-muted hover:text-primary transition">Developer Documentation</a></li>
           </ul>
         </div>
 
         <div>
-          <h4 class="font-bold text-lg mb-4" style="color: var(--text-main);">Connect</h4>
+          <h4 class="font-bold text-base mb-4" style="color: var(--text-main);">Community</h4>
           <ul class="flex flex-col gap-3">
-            <li><a href="https://github.com/01iamysf" target="_blank" rel="noopener noreferrer" class="text-base text-muted hover:text-primary transition flex items-center gap-2">
-              <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-              GitHub
-            </a></li>
-            <li><a href="#" class="text-base text-muted hover:text-primary transition flex items-center gap-2">
-              <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
-              Twitter
-            </a></li>
+            <li>
+              <a href="https://github.com/01iamysf/NetPin" target="_blank" rel="noopener noreferrer" class="text-sm text-muted hover:text-primary transition flex items-center gap-2">
+                <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                GitHub Community
+              </a>
+            </li>
+            <li>
+              <a href="https://www.reddit.com/r/NetPin" target="_blank" rel="noopener noreferrer" class="text-sm text-muted hover:text-primary transition flex items-center gap-2">
+                <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v8M8 12h8"/></svg>
+                Reddit Subreddit
+              </a>
+            </li>
+            <li>
+              <a href="https://www.linkedin.com/company/netpin" target="_blank" rel="noopener noreferrer" class="text-sm text-muted hover:text-primary transition flex items-center gap-2">
+                <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                LinkedIn Page
+              </a>
+            </li>
           </ul>
         </div>
       </div>
     </div>
     
     <div class="container text-center" style="margin-top: var(--space-12); padding-top: var(--space-8); border-top: 1px solid var(--border-color);">
-      <p class="text-sm text-muted">© 2026 NetPin. All rights reserved.</p>
+      <p class="text-xs text-muted">© 2026 NetPin Open Source Community. All rights reserved.</p>
     </div>
   </footer>
 
   <script src="scripts/main.js"></script>
   <script>
-    // Simple script to highlight active sidebar link based on scroll position
     document.addEventListener('DOMContentLoaded', () => {
       const sections = document.querySelectorAll('.docs-section');
       const navLinks = document.querySelectorAll('.docs-nav-link');
