@@ -23,25 +23,25 @@
   --color-red-500: #ef4444;
   --color-rose-500: #f43f5e;
 
-  /* Theme Defaults (Light Mode Base) */
-  --bg-body: #f8fafc;        /* slate-50 */
-  --bg-card: #ffffff;        /* white */
-  --bg-card-hover: #f1f5f9;  /* slate-100 */
-  --bg-sub-card: #f8fafc;
-  --text-main: #1e293b;      /* slate-800 */
-  --text-muted: #64748b;     /* slate-500 */
+  /* Theme Defaults (Off-White Minimalist Theme) */
+  --bg-body: #f8fafc;        /* soft off-white slate */
+  --bg-card: #ffffff;        /* crisp pure white */
+  --bg-card-hover: #f1f5f9;  /* soft slate tint */
+  --bg-sub-card: #ffffff;
+  --text-main: #0f172a;      /* deep slate/navy */
+  --text-muted: #64748b;     /* neutral slate */
   --text-inverse: #ffffff;
   --border-color: #e2e8f0;   /* slate-200 */
   --border-color-light: #f1f5f9; /* slate-100 */
   
-  --shadow-color: rgba(0, 0, 0, 0.05);
-  --shadow-primary: rgba(59, 130, 246, 0.15);
+  --shadow-color: rgba(15, 23, 42, 0.04);
+  --shadow-primary: rgba(37, 99, 235, 0.12);
   
   --map-filter: none;
-  --map-opacity: 0.05;
+  --map-opacity: 0.08;
 
   /* Logo Wrapper Light */
-  --logo-bg: #dbeafe; 
+  --logo-bg: #eff6ff; 
   --logo-border: #bfdbfe; 
   --logo-shadow: 0 4px 6px -1px rgba(191, 219, 254, 0.5);
 
@@ -78,23 +78,3 @@
   --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Dark Theme overrides class (if dark mode is active) */
-:root[data-theme="dark"] {
-  --bg-body: #0a0e1a;        
-  --bg-card: #0f172a;        
-  --bg-card-hover: #1e293b;  
-  --bg-sub-card: #0c1220;    
-  --text-main: #e2e8f0;      
-  --text-muted: #94a3b8;     
-  --border-color: #1e293b;   
-  --border-color-light: rgba(30, 41, 59, 0.5);
-  
-  --shadow-color: rgba(0, 0, 0, 0.3);
-  --map-filter: invert(1);
-  --map-opacity: 0.1;
-
-  /* Logo Wrapper Dark */
-  --logo-bg: rgba(49, 46, 129, 0.4); 
-  --logo-border: rgba(99, 102, 241, 0.3);
-  --logo-shadow: 0 4px 6px -1px rgba(30, 58, 138, 0.2);
-}
