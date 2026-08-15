@@ -23,9 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
       dismissIntro();
     } else {
       sessionStorage.setItem('intro-played', '1');
-      // Loader bar: 2.2s delay + 2.2s fill = 4.4s total
-      // +800ms buffer for comfortable reading time after text appears
-      setTimeout(dismissIntro, 5200);
+      // Loader bar: 0.25s delay + 1.6s fill = 1.85s total
+      // +550ms buffer for comfortable reading time after text appears
+      setTimeout(dismissIntro, 2400);
     }
   }
 
