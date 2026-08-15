@@ -35,14 +35,34 @@
         linear-gradient(90deg, rgba(37, 99, 235, 0.05) 1px, transparent 1px);
       background-size: 48px 48px;
     }
+    .intro-bg-grid::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: inherit;
+      animation: intro-grid-pulse 3s ease-in-out infinite;
+      will-change: opacity;
+    }
+    @keyframes intro-grid-pulse {
+      0%, 100% { opacity: 0.5; }
+      50%       { opacity: 1;   }
+    }
+
     .intro-glow-burst {
       position: absolute;
       width: 600px;
       height: 600px;
       border-radius: 50%;
       background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, rgba(99, 102, 241, 0.06) 40%, transparent 70%);
+      animation: intro-glow-expand 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
       pointer-events: none;
+      will-change: transform, opacity;
     }
+    @keyframes intro-glow-expand {
+      from { transform: scale(0.4); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
+    }
+
     .intro-content {
       display: flex;
       flex-direction: column;
@@ -50,7 +70,9 @@
       gap: 2rem;
       position: relative;
       z-index: 1;
+      will-change: transform, opacity;
     }
+
     .intro-logo-wrapper {
       position: relative;
       width: 120px;
@@ -58,7 +80,46 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      animation: intro-logo-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0s both;
+      will-change: transform, opacity;
     }
+    @keyframes intro-logo-pop {
+      from { opacity: 0; transform: scale(0.5); }
+      to   { opacity: 1; transform: scale(1);   }
+    }
+
+    .intro-logo-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1.5px solid transparent;
+      will-change: transform;
+      transform: rotate(0deg);
+    }
+    .intro-logo-ring-1 {
+      width: 100%;
+      height: 100%;
+      border-top-color: rgba(37, 99, 235, 0.6);
+      border-right-color: rgba(37, 99, 235, 0.15);
+      animation: intro-spin 2.4s linear infinite;
+    }
+    .intro-logo-ring-2 {
+      width: 132%;
+      height: 132%;
+      border-bottom-color: rgba(79, 70, 229, 0.5);
+      border-left-color: rgba(79, 70, 229, 0.1);
+      animation: intro-spin 3.6s linear infinite reverse;
+    }
+    .intro-logo-ring-3 {
+      width: 164%;
+      height: 164%;
+      border-top-color: rgba(147, 51, 234, 0.3);
+      border-right-color: rgba(147, 51, 234, 0.08);
+      animation: intro-spin 5.2s linear infinite;
+    }
+    @keyframes intro-spin {
+      to { transform: rotate(360deg); }
+    }
+
     .intro-logo-icon {
       width: 72px;
       height: 72px;
@@ -77,6 +138,12 @@
     }
     .intro-title-block {
       text-align: center;
+      animation: intro-title-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both;
+      will-change: transform, opacity;
+    }
+    @keyframes intro-title-rise {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0);    }
     }
     .intro-title {
       font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -98,6 +165,12 @@
       text-transform: uppercase;
       color: #64748b;
       margin: 0;
+      animation: intro-tagline-fade 0.5s ease-out 0.15s both;
+      will-change: opacity, transform;
+    }
+    @keyframes intro-tagline-fade {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0);   }
     }
     .intro-loader {
       width: 180px;
@@ -105,12 +178,25 @@
       background: #e2e8f0;
       border-radius: 999px;
       overflow: hidden;
+      animation: intro-loader-appear 0.3s ease 0.2s both;
+    }
+    @keyframes intro-loader-appear {
+      from { opacity: 0; }
+      to   { opacity: 1; }
     }
     .intro-loader-bar {
       height: 100%;
       width: 100%;
       border-radius: 999px;
       background: linear-gradient(90deg, #3b82f6, #818cf8, #c084fc);
+      transform: scaleX(0);
+      transform-origin: left center;
+      animation: intro-loader-fill 1.6s cubic-bezier(0.4, 0, 0.2, 1) 0.25s forwards;
+      will-change: transform;
+    }
+    @keyframes intro-loader-fill {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
     }
     html:has(body.intro-active), body.intro-active {
       overflow: hidden;
@@ -208,12 +294,26 @@
   }
   </script>
 
-  <!-- CSS Design Tokens & Styles -->
-  <link rel="stylesheet" href="styles/design-tokens.css">
-  <link rel="stylesheet" href="styles/base.css">
-  <link rel="stylesheet" href="styles/layout.css">
-  <link rel="stylesheet" href="styles/components.css">
-  <link rel="stylesheet" href="styles/animations.css">
+  <!-- Non-blocking asynchronous CSS loading for main landing page -->
+  <link rel="preload" as="style" href="styles/design-tokens.css">
+  <link rel="preload" as="style" href="styles/base.css">
+  <link rel="preload" as="style" href="styles/layout.css">
+  <link rel="preload" as="style" href="styles/components.css">
+  <link rel="preload" as="style" href="styles/animations.css">
+
+  <link rel="stylesheet" href="styles/design-tokens.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="styles/base.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="styles/layout.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="styles/components.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="styles/animations.css" media="print" onload="this.media='all'">
+
+  <noscript>
+    <link rel="stylesheet" href="styles/design-tokens.css">
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/layout.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/animations.css">
+  </noscript>
 
   <!-- Inter Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
