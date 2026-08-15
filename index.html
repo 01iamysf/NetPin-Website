@@ -4,9 +4,118 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <!-- Critical inline background: prevents flash on load -->
+  <!-- Critical Inline CSS: Renders Splash Screen & Title Immediately for Fast Mobile LCP -->
   <style>
     html, body { background-color: #f8fafc; }
+
+    /* Critical Splash Screen Overlay */
+    .intro-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f8fafc !important;
+      overflow: hidden;
+      contain: layout style;
+      transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.7s;
+      will-change: opacity;
+    }
+    .intro-overlay.is-hidden {
+      opacity: 0;
+      pointer-events: none;
+      visibility: hidden;
+    }
+    .intro-bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(37, 99, 235, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37, 99, 235, 0.05) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    .intro-glow-burst {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, rgba(99, 102, 241, 0.06) 40%, transparent 70%);
+      pointer-events: none;
+    }
+    .intro-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+    .intro-logo-wrapper {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .intro-logo-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 1px solid #bfdbfe;
+      box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.1), 0 8px 24px rgba(37, 99, 235, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+    }
+    .intro-logo-icon img {
+      width: 38px;
+      height: 38px;
+    }
+    .intro-title-block {
+      text-align: center;
+    }
+    .intro-title {
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: clamp(3rem, 8vw, 5rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin: 0 0 0.5rem 0;
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #4f46e5 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .intro-tagline {
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: clamp(0.85rem, 2vw, 1.05rem);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #64748b;
+      margin: 0;
+    }
+    .intro-loader {
+      width: 180px;
+      height: 3px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .intro-loader-bar {
+      height: 100%;
+      width: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #3b82f6, #818cf8, #c084fc);
+    }
+    html:has(body.intro-active), body.intro-active {
+      overflow: hidden;
+      background-color: #0a0e1a !important;
+    }
   </style>
 
   <!-- Title & SEO Meta Tags -->
@@ -127,7 +236,7 @@
         <div class="intro-logo-ring intro-logo-ring-2"></div>
         <div class="intro-logo-ring intro-logo-ring-3"></div>
         <div class="intro-logo-icon">
-          <img src="assets/logo.png" alt="NetPin Extension Logo">
+          <img src="assets/logo.png" alt="NetPin Extension Logo" width="38" height="38" decoding="async">
         </div>
       </div>
       <div class="intro-title-block">
