@@ -34,11 +34,35 @@
   <meta property="twitter:description" content="Instantly uncover physical server locations, hidden tracking scripts, and carbon footprints for every website you visit.">
   <meta property="twitter:image" content="https://netpin.site/assets/overview.png">
 
-  <!-- Rich JSON-LD Schemas for Google AI Overview & Search Indexing -->
+  <!-- Rich JSON-LD Schemas for Google Sitelinks, Search Indexing & AI Overview -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://netpin.site/#website",
+        "url": "https://netpin.site/",
+        "name": "NetPin",
+        "alternateName": "NetPin Extension",
+        "description": "Official website for NetPin, the open-source web infrastructure, server geolocation, and tracker analyzer extension.",
+        "publisher": {
+          "@type": "Organization",
+          "@id": "https://netpin.site/#organization"
+        }
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://netpin.site/#organization",
+        "name": "NetPin",
+        "url": "https://netpin.site/",
+        "logo": "https://netpin.site/assets/logo.png",
+        "sameAs": [
+          "https://github.com/01iamysf/NetPin",
+          "https://www.reddit.com/r/chrome_extensions/comments/1udnona/netpin/",
+          "https://www.linkedin.com/company/netpin"
+        ]
+      },
       {
         "@type": "SoftwareApplication",
         "@id": "https://netpin.site/#software",
@@ -54,16 +78,57 @@
         "description": "An open-source browser extension that provides physical IP geolocation, ASN lookup, tracker detection, WHOIS inspection, and server sustainability metrics.",
         "publisher": {
           "@type": "Organization",
-          "name": "NetPin Open Source Community",
-          "url": "https://github.com/01iamysf/NetPin"
+          "@id": "https://netpin.site/#organization"
         }
       },
       {
-        "@type": "WebSite",
-        "@id": "https://netpin.site/#website",
-        "url": "https://netpin.site/",
-        "name": "NetPin",
-        "description": "Official website and documentation for NetPin web infrastructure analyzer extension."
+        "@type": "ItemList",
+        "@id": "https://netpin.site/#sitenav",
+        "name": "Main Navigation Links",
+        "itemListElement": [
+          {
+            "@type": "SiteNavigationElement",
+            "position": 1,
+            "name": "Features",
+            "description": "Explore NetPin core modules: IP Geolocation, ASN lookup, Security audit, and Tracker detection.",
+            "url": "https://netpin.site/#features"
+          },
+          {
+            "@type": "SiteNavigationElement",
+            "position": 2,
+            "name": "How it Works",
+            "description": "Learn how NetPin passively inspects active web tab network connections under Manifest V3.",
+            "url": "https://netpin.site/#how-it-works"
+          },
+          {
+            "@type": "SiteNavigationElement",
+            "position": 3,
+            "name": "Developer Documentation",
+            "description": "Official developer guide, build instructions, and extension architecture documentation.",
+            "url": "https://netpin.site/docs.html"
+          },
+          {
+            "@type": "SiteNavigationElement",
+            "position": 4,
+            "name": "Privacy Policy",
+            "description": "Read NetPin local-first zero-telemetry privacy principles and data sovereignty commitment.",
+            "url": "https://netpin.site/#privacy"
+          },
+          {
+            "@type": "SiteNavigationElement",
+            "position": 5,
+            "name": "FAQ",
+            "description": "Frequently asked questions regarding server location tracking, hidden scripts, and green web hosting.",
+            "url": "https://netpin.site/#faq"
+          },
+          {
+            "@type": "SiteNavigationElement",
+            "position": 6,
+            "name": "Community",
+            "description": "Join r/NetPin on Reddit, inspect source code on GitHub, or follow on LinkedIn.",
+            "url": "https://netpin.site/#community"
+          }
+        ]
       },
       {
         "@type": "FAQPage",
@@ -500,15 +565,15 @@
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 stagger-scroll">
         <!-- Reddit Card -->
-        <a href="https://www.reddit.com/r/NetPin" target="_blank" rel="noopener noreferrer" class="card animate-on-scroll flex flex-col items-start text-left hover-link" style="text-decoration: none;">
+        <a href="https://www.reddit.com/r/chrome_extensions/comments/1udnona/netpin/" target="_blank" rel="noopener noreferrer" class="card animate-on-scroll flex flex-col items-start text-left hover-link" style="text-decoration: none;">
           <div class="card-icon-wrapper" style="background-color: #fff1f2; border-color: #fecdd3; color: #e11d48;">
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v8M8 12h8"/></svg>
           </div>
-          <div class="badge badge-blue mb-2">Reddit Community</div>
-          <h3 class="text-xl font-bold text-main mb-2">r/NetPin Subreddit</h3>
-          <p class="text-sm text-muted mb-4">Discuss privacy discoveries, share network analysis findings, submit feature proposals, and chat with fellow users.</p>
+          <div class="badge badge-blue mb-2">r/chrome_extensions</div>
+          <h3 class="text-xl font-bold text-main mb-2">Reddit Post & Feedback</h3>
+          <p class="text-sm text-muted mb-4">Check out our community post on r/chrome_extensions, give feedback on hosting geolocations & third-party tracker features, and discuss new ideas.</p>
           <span class="text-sm font-bold text-primary flex items-center gap-1 mt-auto">
-            Visit Subreddit
+            Join Discussion on Reddit
             <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
           </span>
         </a>
@@ -753,9 +818,9 @@
               </a>
             </li>
             <li>
-              <a href="https://www.reddit.com/r/NetPin" target="_blank" rel="noopener noreferrer" class="text-sm text-muted hover:text-primary transition flex items-center gap-2">
+              <a href="https://www.reddit.com/r/chrome_extensions/comments/1udnona/netpin/" target="_blank" rel="noopener noreferrer" class="text-sm text-muted hover:text-primary transition flex items-center gap-2">
                 <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v8M8 12h8"/></svg>
-                Reddit Subreddit
+                Reddit (r/chrome_extensions)
               </a>
             </li>
             <li>
