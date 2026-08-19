@@ -31,24 +31,45 @@
   <meta property="twitter:description" content="Explore the technical architecture, Manifest V3 service worker design, and IP Geolocation implementation of NetPin.">
   <meta property="twitter:image" content="https://netpin.site/assets/overview.png">
 
-  <!-- JSON-LD TechArticle Schema -->
+  <!-- JSON-LD TechArticle & Breadcrumb Schemas for Google Rich Snippets -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "TechArticle",
-    "headline": "NetPin Extension Developer Documentation",
-    "description": "Comprehensive technical documentation for building, extending, and auditing the NetPin browser extension.",
-    "url": "https://netpin.site/docs.html",
-    "author": {
-      "@type": "Organization",
-      "name": "NetPin Open Source Community",
-      "url": "https://github.com/01iamysf/NetPin"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "NetPin",
-      "url": "https://netpin.site/"
-    }
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://netpin.site/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Documentation",
+            "item": "https://netpin.site/docs.html"
+          }
+        ]
+      },
+      {
+        "@type": "TechArticle",
+        "headline": "NetPin Extension Developer Documentation",
+        "description": "Comprehensive technical documentation for building, extending, and auditing the NetPin browser extension.",
+        "url": "https://netpin.site/docs.html",
+        "author": {
+          "@type": "Organization",
+          "name": "NetPin Open Source Community",
+          "url": "https://github.com/01iamysf/NetPin"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "NetPin",
+          "url": "https://netpin.site/"
+        }
+      }
+    ]
   }
   </script>
 
@@ -213,7 +234,7 @@ npm run build</div>
           <p>Contributions are welcomed from developers of all backgrounds. Feel free to submit bug reports, pull requests, or feature proposals across our channels:</p>
           <ul>
             <li><a href="https://github.com/01iamysf/NetPin" target="_blank" rel="noopener noreferrer" class="text-primary font-bold">GitHub Repository</a></li>
-            <li><a href="https://www.reddit.com/r/NetPin" target="_blank" rel="noopener noreferrer" class="text-primary font-bold">Reddit Community (r/NetPin)</a></li>
+            <li><a href="https://www.reddit.com/r/chrome_extensions/comments/1udnona/netpin/" target="_blank" rel="noopener noreferrer" class="text-primary font-bold">Reddit Community Post (r/chrome_extensions)</a></li>
             <li><a href="https://www.linkedin.com/company/netpin" target="_blank" rel="noopener noreferrer" class="text-primary font-bold">LinkedIn Community Page</a></li>
           </ul>
         </section>
@@ -274,9 +295,9 @@ npm run build</div>
               </a>
             </li>
             <li>
-              <a href="https://www.reddit.com/r/NetPin" target="_blank" rel="noopener noreferrer" class="text-sm text-muted hover:text-primary transition flex items-center gap-2">
+              <a href="https://www.reddit.com/r/chrome_extensions/comments/1udnona/netpin/" target="_blank" rel="noopener noreferrer" class="text-sm text-muted hover:text-primary transition flex items-center gap-2">
                 <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v8M8 12h8"/></svg>
-                Reddit Subreddit
+                Reddit (r/chrome_extensions)
               </a>
             </li>
             <li>
